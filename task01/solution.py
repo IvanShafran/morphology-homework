@@ -17,6 +17,17 @@ def write_normal_forms_to_file(word, morph, file):
 
 	file.write("\n")
 
+def write_gram_meaning_and_scores_to_file(word, morph, file):
+	"""
+	Выводит грамматические значения и их оценки.
+	"""
+	file.write('Грамматические значения слова "' + word + '"\n')
+
+	for parse_result in morph.parse(word):
+		file.write(parse_result.tag.cyr_repr + " оценка=" + str(parse_result.score) + "\n")
+
+	file.write("\n")
+
 file = codecs.open("answer.txt", "w", "utf-8")
 file.write(u'\ufeff')
 
@@ -25,5 +36,6 @@ morph = pymorphy2.MorphAnalyzer()
 arms = "руки"
 
 write_normal_forms_to_file(arms, morph, file)
+write_gram_meaning_and_scores_to_file(arms, morph, file)
 
 file.close()
