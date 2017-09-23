@@ -28,14 +28,37 @@ def write_gram_meaning_and_scores_to_file(word, morph, file):
 
 	file.write("\n")
 
+def write_normal_forms_and_scores_to_file(word, morph, file):
+	"""
+	Выводит леммы слова и оценки с учетом всех грамматических значений. 
+	Может быть несколько, т.к. одно и то же написание может соответствовать разным словам.
+	Например, "стали" -- "сталь" или "стать".
+	"""
+	file.write('Леммы слова "' + word + '":\n')
+
+	distinct_normal_forms_and_scores = dict()
+	for parse_result in morph.parse(word):
+		normal_form = parse_result.normal_form
+		if normal_form not in distinct_normal_forms_and_scores:
+			distinct_normal_forms_and_scores[normal_form] = 0.0
+
+		distinct_normal_forms_and_scores[normal_form] += parse_result.score
+
+	for normal_form in distinct_normal_forms_and_scores.keys():
+		file.write(normal_form + " оценка=" + str(distinct_normal_forms_and_scores[normal_form]) + '\n')
+
+	file.write("\n")
+
 file = codecs.open("answer.txt", "w", "utf-8")
 file.write(u'\ufeff')
 
 morph = pymorphy2.MorphAnalyzer()
 
-arms = "руки"
+ruki = "руки"
+tri = "три"
 
-write_normal_forms_to_file(arms, morph, file)
-write_gram_meaning_and_scores_to_file(arms, morph, file)
+write_normal_forms_to_file(ruki, morph, file)
+write_gram_meaning_and_scores_to_file(ruki, morph, file)
+write_normal_forms_and_scores_to_file(tri, morph, file)
 
 file.close()
