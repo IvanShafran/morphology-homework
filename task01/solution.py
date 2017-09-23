@@ -49,6 +49,18 @@ def write_normal_forms_and_scores_to_file(word, morph, file):
 
 	file.write("\n")
 
+def write_first_lexeme_to_file(word, morph, file):
+	"""
+	Выводит лексему первого элемента parse в виде слов и их оценок.
+	"""
+	file.write('Лексема слова "' + word + '"' + "\n")
+
+	lexeme = morph.parse(word)[0].lexeme
+	for word_parse in lexeme:
+		file.write(word_parse.word + " оценка=" + str(word_parse.score) + "\n")
+
+	file.write("\n")
+
 file = codecs.open("answer.txt", "w", "utf-8")
 file.write(u'\ufeff')
 
@@ -56,9 +68,11 @@ morph = pymorphy2.MorphAnalyzer()
 
 ruki = "руки"
 tri = "три"
+stat = "стать"
 
 write_normal_forms_to_file(ruki, morph, file)
 write_gram_meaning_and_scores_to_file(ruki, morph, file)
 write_normal_forms_and_scores_to_file(tri, morph, file)
+write_first_lexeme_to_file(stat, morph, file)
 
 file.close()
