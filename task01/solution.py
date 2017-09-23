@@ -61,6 +61,17 @@ def write_first_lexeme_to_file(word, morph, file):
 
 	file.write("\n")
 
+def write_word_in_plural_and_tvor_to_file(word, morph, file):
+	"""
+	Выводит множ число твор падежа первого элемента parse.
+	"""
+	file.write('Множ число и твор пад слова "' + word + '"' + "\n")
+
+	file.write(morph.parse(word)[0].inflect({'plur', 'ablt'}).word)
+
+	file.write("\n")
+
+
 file = codecs.open("answer.txt", "w", "utf-8")
 file.write(u'\ufeff')
 
@@ -69,10 +80,12 @@ morph = pymorphy2.MorphAnalyzer()
 ruki = "руки"
 tri = "три"
 stat = "стать"
+turok = "турок"
 
 write_normal_forms_to_file(ruki, morph, file)
 write_gram_meaning_and_scores_to_file(ruki, morph, file)
 write_normal_forms_and_scores_to_file(tri, morph, file)
 write_first_lexeme_to_file(stat, morph, file)
+write_word_in_plural_and_tvor_to_file(turok, morph, file)
 
 file.close()
