@@ -67,9 +67,20 @@ def write_word_in_plural_and_tvor_to_file(word, morph, file):
 	"""
 	file.write('Множ число и твор пад слова "' + word + '"' + "\n")
 
-	file.write(morph.parse(word)[0].inflect({'plur', 'ablt'}).word)
+	file.write(morph.parse(word)[0].inflect({'plur', 'ablt'}).word + "\n")
 
 	file.write("\n")
+
+def write_part_of_to_file(word, morph, file):
+	"""
+	Выводит часть речи слова.
+	"""
+	file.write('Части речи слова "' + word + '"' + "\n")
+
+	for parse_result in morph.parse(word):
+		file.write(parse_result.tag.POS + "\n")
+
+	file.write("\n")	
 
 
 file = codecs.open("answer.txt", "w", "utf-8")
@@ -81,11 +92,13 @@ ruki = "руки"
 tri = "три"
 stat = "стать"
 turok = "турок"
+mainu = "майню"
 
 write_normal_forms_to_file(ruki, morph, file)
 write_gram_meaning_and_scores_to_file(ruki, morph, file)
 write_normal_forms_and_scores_to_file(tri, morph, file)
 write_first_lexeme_to_file(stat, morph, file)
 write_word_in_plural_and_tvor_to_file(turok, morph, file)
+write_part_of_to_file(mainu, morph, file)
 
 file.close()
