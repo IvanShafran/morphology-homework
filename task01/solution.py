@@ -80,7 +80,42 @@ def write_part_of_to_file(word, morph, file):
 	for parse_result in morph.parse(word):
 		file.write(parse_result.tag.POS + "\n")
 
-	file.write("\n")	
+	file.write("\n")
+
+import re
+def text_to_wordlist(sentence):
+	regexp = "[^а-яА-Яё]"
+	sentence = re.sub(regexp, " ", sentence)
+	result = sentence.lower().split()
+	return result
+
+from collections import Counter
+def solve_thrird_part(morph, file):
+	"""
+	Решение третьего пункта на тексте Стругацких.
+	Учитываем первые леммы в подсчете.
+	"""
+	text_file = open('wp.txt', 'r', encoding="utf8")
+	lines = text_file.readlines()
+	words = []
+	for line in lines:
+		words += text_to_wordlist(line)
+	file.write("Количестов слов: " + str(len(words)) + "\n")
+
+	nouns = []
+	verbs = []
+	for word in words:
+		parse_result = morph.parse(word)[0]
+
+		if "NOUN" in parse_result.tag:
+			nouns.append(parse_result.normal_form)
+		if "VERB" in parse_result.tag or "INFN" in parse_result.tag:
+			verbs.append(parse_result.normal_form)
+
+	file.write("Топ 10 сущ лемм: " + str(Counter(nouns).most_common(10)) + "\n")
+	file.write("Топ 10 глаг лемм: " + str(Counter(verbs).most_common(10)))
+
+	text_file.close()
 
 
 file = codecs.open("answer.txt", "w", "utf-8")
@@ -100,5 +135,7 @@ write_normal_forms_and_scores_to_file(tri, morph, file)
 write_first_lexeme_to_file(stat, morph, file)
 write_word_in_plural_and_tvor_to_file(turok, morph, file)
 write_part_of_to_file(mainu, morph, file)
+
+solve_thrird_part(morph, file)
 
 file.close()
