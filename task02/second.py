@@ -58,7 +58,7 @@ def test_bor(bor, ofile):
     ofile.write("\n")
 
 from queue import Queue
-def predict_word(bor, word, ofile, debug=False):
+def predict_word(bor, word):
     hypothsys = Queue()
     hypothsys.put([bor, '', 0]) # node, word, change_distance
     best_word = 'Not found'
@@ -66,8 +66,6 @@ def predict_word(bor, word, ofile, debug=False):
 
     while not hypothsys.empty():
         node, cur_word, change_distance = hypothsys.get()
-        #if debug:
-        #    ofile.write('cur_word ' + cur_word + ' change_distance ' + str(change_distance) + '\n')
         
         if node.is_terminal:
             distance_with_deletion = change_distance + len(word) - len(cur_word)
@@ -93,7 +91,7 @@ def test_predict(bor, ofile):
     test_words = ['стул', 'сту', 'стулец', 'стел', 'овраг', 'челов', 'хооо', 'рывлфв', 
             'вылод', 'орв', 'змен', 'олы', 'матан', 'годнота', 'бор', 'иван', 'смузи', 'дорогостоящий', 'предводитель']
     for word in test_words:
-        predict, dist = predict_word(bor, word, ofile, True)
+        predict, dist = predict_word(bor, word)
         ofile.write("Ближайшее к слову '" + word + "': " + predict + " dist: " + str(dist) + "\n")
 
 
