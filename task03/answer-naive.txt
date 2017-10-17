@@ -1,0 +1,10 @@
+cat - cats
+man - men
+beach - beaches
+gas - gases
+knife - knives
+elf - elves
+fish - fish
+sky - skies
+toy - toys
+medium - mediums
