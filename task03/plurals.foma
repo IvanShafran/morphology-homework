@@ -1,0 +1,22 @@
+define Vowels [a | e | i | o | u ];
+
+read lexc english.lexc
+define Lexicon;
+
+# Исключения
+define exceptions [g o o s e "^" s] -> [g e e s e];
+
+# watch -> watches
+define EInsertion [..] -> e || s | z | x | c h | s h | o _ "^" s ;
+
+# elfs -> elves
+define FEChange f -> v e || _ "^" s ,,
+                f e -> v e || _ "^" s ;
+
+# skys -> skies
+define YChange y -> i e || \Vowels _ "^" s;
+
+# Cleanup: remove morpheme boundaries
+define Cleanup "^" -> 0;
+
+regex Lexicon .o. exceptions .o. EInsertion .o. FEChange .o. YChange .o. Cleanup;

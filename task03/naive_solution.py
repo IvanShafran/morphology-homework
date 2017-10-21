@@ -30,8 +30,8 @@ def exceptionRule(word):
 	else:
 		return None
 
-firstRuleOneLetterSuffixes = ['z', 's', 'x']
-firstRuleTwoLetterSuffixes = ['ch', 'sh', 'o']
+firstRuleOneLetterSuffixes = ['z', 's', 'x', 'o']
+firstRuleTwoLetterSuffixes = ['ch', 'sh']
 
 
 def firstRule(word):

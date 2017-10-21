@@ -1,0 +1,21 @@
+Multichar_Symbols +N +Pl
+
+LEXICON Root
+
+Noun ;
+
+LEXICON Noun
+
+cat Ninf;
+potato Ninf;
+goose Ninf;
+beach Ninf;
+gas Ninf;
+knife Ninf;
+elf Ninf;
+fish Ninf;
+sky Ninf;
+toy Ninf;
+medium Ninf;
+
+LEXICON Ninf +N+Pl:^s  #;
